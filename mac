@@ -120,17 +120,11 @@ tap "heroku/brew"
 brew "universal-ctags", args: ["HEAD"]
 brew "git"
 brew "openssl"
-brew "rcm"
-brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
-brew "tmux"
 brew "vim"
-brew "watchman"
 brew "zsh"
 
 # Heroku
 brew "heroku/brew/heroku"
-brew "parity"
 
 # GitHub
 brew "hub"
