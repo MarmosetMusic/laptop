@@ -142,7 +142,13 @@ cask "gpg-suite"
 brew "postgres", restart_service: :changed
 brew "redis", restart_service: :changed
 
+## MAC OS Applications
+
+# Slack
+cask slack 
+
 # IDE
+cask visual-studio-code
 
 # 1Password
 cask 1Password
@@ -196,20 +202,6 @@ bundle config --global jobs $((number_of_cores - 1))
 fancy_echo "Installing latest Node ..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
 install_asdf_language "nodejs"
-
-fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
-
-
-fancy_echo "Installing latest Node ..."
-bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-install_asdf_language "nodejs"
-
-fancy_echo "Installing latest Node ..."
-install_asdf_language "nodejs"
-
-
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
