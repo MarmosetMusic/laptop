@@ -145,13 +145,16 @@ brew "redis", restart_service: :changed
 ## MAC OS Applications
 
 # Slack
-cask slack 
+cask "slack"
 
 # IDE
-cask visual-studio-code
+cask "visual-studio-code"
 
 # 1Password
-cask 1Password
+cask "1Password"
+
+# Marmoset Project Dependencies
+brew "chromedriver"
 
 EOF
 
