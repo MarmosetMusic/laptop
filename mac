@@ -221,3 +221,9 @@ fi
 fancy_echo "Copy and add you public SSH key to Github: pbcopy < ~/.ssh/id_rsa.pub"
 fancy_echo "Opening Browser to add key to Github"
 open https://github.com/settings/keys
+
+fancy_echo "Cloning the Marmoset repo ..."
+fancy_echo "Enter path (e.g. ~/projects/Marmosetmusic):"
+read dirpath
+git clone https://github.com/MarmosetMusic/marmosetmusic.git "$dirpath"
+fancy_echo "Marmoset repo cloned to '$dirpath'."
