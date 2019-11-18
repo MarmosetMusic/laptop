@@ -215,7 +215,7 @@ fancy_echo "Opening Browser to install 1Password Extension"
 open https://1password.com/downloads/mac/#browsers
 
 fancy_echo "Checking for public SSH key ..."
-if [ ! -f "ls ~/.ssh/id_rsa.pub"]; then
+if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
   fancy_echo "Create a public key: ssh-keygen -t rsa -b 4096 -C 'you_email@example.com'"
 fi
 fancy_echo "Copy and add you public SSH key to Github: pbcopy < ~/.ssh/id_rsa.pub"
