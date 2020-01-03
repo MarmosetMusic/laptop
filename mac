@@ -11,6 +11,12 @@ fancy_echo() {
   printf "\\n$fmt\\n" "$@"
 }
 
+fancy_pause() {
+  printf "\\n"
+  read -n 1 -s -r -p "Press any key to continue or Ctrl+C to quit."
+  printf "\\n"
+}
+
 append_to_zshrc() {
   local text="$1" zshrc
   local skip_new_line="${2:-0}"
@@ -109,7 +115,12 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
+
+### INSTALLING DEPENDENCIES
+
+# The below command and dependency list uses the 'Brewfile' format.  To update this list, make sure you follow Brewfile formatting rules
+# See: https://github.com/Homebrew/homebrew-bundle
+(brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 tap "homebrew/services"
 tap "universal-ctags/universal-ctags"
@@ -153,9 +164,10 @@ cask "visual-studio-code"
 cask "1Password"
 
 # Marmoset Project Dependencies
-brew "chromedriver"
+cask "chromedriver"
 
 EOF
+) || (fancy_echo "## WARNING ##\nSome dependencies were not able to be installed (they may already exist).  Check the logs above for more details, it is most likely safe" && fancy_pause)
 
 fancy_echo "Update heroku binary ..."
 brew unlink heroku
@@ -167,6 +179,7 @@ if [ ! -d "$HOME/.asdf" ]; then
   append_to_zshrc "source $HOME/.asdf/asdf.sh" 1
 fi
 
+# This will install ASDF plugins, which are fine tools for version management, but ASDF could be made optional
 alias install_asdf_plugin=add_or_update_asdf_plugin
 add_or_update_asdf_plugin() {
   local name="$1"
@@ -211,19 +224,21 @@ if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
-fancy_echo "Opening Browser to install 1Password Extension"
-open https://1password.com/downloads/mac/#browsers
+fancy_echo "Opening Browser to install 1Password Browser Extension"
+open "https://1password.com/downloads/mac/#browsers"
 
 fancy_echo "Checking for public SSH key ..."
 if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
   fancy_echo "Create a public key: ssh-keygen -t rsa -b 4096 -C 'you_email@example.com'"
 fi
 fancy_echo "Copy and add you public SSH key to Github: pbcopy < ~/.ssh/id_rsa.pub"
-fancy_echo "Opening Browser to add key to Github"
-open https://github.com/settings/keys
+fancy_echo "Opening Browser to add key to Github. Please complete before continuing ..."
+open https://github.com/settings/keys  && fancy_pause
+
 
 fancy_echo "Cloning the Marmoset repo ..."
-fancy_echo "Enter path (e.g. ~/projects/Marmosetmusic):"
+fancy_echo "Enter path [default: $HOME/projects/Marmosetmusic]:"
 read dirpath
+dirpath=${dirpath:-$HOME/projects/Marmosetmusic}
 git clone https://github.com/MarmosetMusic/marmosetmusic.git "$dirpath"
 fancy_echo "Marmoset repo cloned to '$dirpath'."

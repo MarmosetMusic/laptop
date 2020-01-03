@@ -7,6 +7,8 @@ It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
 based on what is already installed on the machine.
 
+It is inspired by/forked from the laptop script created by [Thoughtbot](https://github.com/thoughtbot/laptop).
+
 Requirements
 ------------
 
